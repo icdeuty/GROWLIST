@@ -9,11 +9,16 @@ Rails.application.routes.draw do
   get 'homes/about'
   
   namespace :admins do
-  	root "homes#top"
+  	resources :users
   end
 
   namespace :users do
   	get 'users/top'
+    resources :users
+    resources :shops
+    resources :blogs
+    resources :tweets
+    resources :relationships
   end
 
 
