@@ -1,24 +1,33 @@
-# README
+# GROWLIST
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## サイト概要
+切り花・花鉢に関する情報交換・共有サイトです。ユーザは自分が育てている花の登録とブログを簡単に開設することができ、お互いのブログを閲覧し、気に入ればお気に入りやフォローをすることが可能です。ツイッターのように比較的自由に会話ができる「タネまき」という機能があり、悩みや花に関することをなんでもつぶやき、それに反応（コメント・いいね）すること等ができ、気楽に他者と触れ合うことができます。そのほか、ユーザが登録したお気に入りの花屋をページ上で共有することができ、ユーザ同士の情報発信により自分にぴったりの花屋を見つけることができます。
 
-Things you may want to cover:
+### サイトテーマ
+植物の情報交換・共有。花を生業にするFLORISTではないけれど、花に興味を持ち自分で花を「育てている」「愛でている」人（=GROWLIST）のコミュニティサイトです。
 
-* Ruby version
+### テーマを選んだ理由
+小さい頃から植物が大好きで、しばらく花屋や庭師として働いていた経験があり、植物に関わるサイトを作成してみたかったためこのテーマを選択しました。一方的に情報提供をするサイトは大きなものがいくつかありますが、花を育てる一般のユーザがお互いに関わり合えるサイトは活発に動いていなかったため、自分で作ってみようと考えました。
 
-* System dependencies
+### ターゲットユーザ
+・花を育てることや花を飾ることが好きな方
+・花に興味はあるが触れる一歩が踏み出せない方
 
-* Configuration
+### 主な利用シーン
+・実際に花を育てている人の声（悩み・相談・質問・成長記録・喜び・成功体験）を聞きたい
+・花について何も知らないから学んでみたいが、どこから手をつければいいかわからない
+・プレゼントやイベントで使用するため、評判のいい花屋を探したい
+・花が好きな人と繋がりたい
+・自分が買った花屋育っている花を他人に紹介したい　等
 
-* Database creation
+## 設計書
 
-* Database initialization
+### 機能一覧
+<https://docs.google.com/spreadsheets/d/15nQNuGxbomTA19nA_u9R4YA0Za-Hd9RydSN9vB8jboM/edit#gid=872084263>
 
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+## 開発環境
+- OS：Linux(CentOS)
+- 言語：HTML,CSS,JavaScript,Ruby,SQL
+- フレームワーク：Ruby on Rails
+- JSライブラリ：jQuery
+- 仮想環境：Vagrant,VirtualBox
