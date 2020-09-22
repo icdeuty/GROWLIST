@@ -1,3 +1,36 @@
 ブログの一覧を表示するページ
 
 <%= link_to '新規投稿', new_users_blog_path(current_user), class: 'btn btn-primary'%>
+
+<h1>Listing Articles</h1>
+<table>
+	<tr>
+		<th>タイトル</th>
+		<th>本文</th>
+		<th>画像</th>
+	</tr>
+
+	<% @blogs.each do |blog| %>
+		<tr>
+			<td><%= link_to blog.title, users_blog_path(blog) %></td>
+			<td>
+				<% if blog.img.blank? %>
+				<td></td>
+				<% else %>
+				<%= image_tag attachment_url(blog, :img, :fill, 100, 100, format: "jpg") %>
+				<% end %>
+			</td>
+
+
+			<%# if @user.profile_img.blank? %>
+			<%#= attachment_image_tag @user, :profile_img_id, :fill, 60, 60, class: "img-circle pull-left profile-thumb", fallback: "no_image.jpg" %>
+			<%# else %>
+			<%#= image_tag attachment_url(@user, :profile_img, :fill, 300, 300, format: "jpg"),class: "img-circle pull-left profile-thumb" %>
+			<%# end %>
+
+			<td><%#= attachment_image_tag @blog, :img %></td>
+
+		</tr>
+	<% end %>
+
+</table>

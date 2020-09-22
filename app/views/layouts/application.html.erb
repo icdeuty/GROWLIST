@@ -42,6 +42,9 @@
                 </li>
               <% else %>
               <p class="navbar-brand"><%= link_to "GROWLIST",root_path  %></p>
+               <li class="nav-item">
+                  <%= link_to "About", homes_about_path, class: 'nav-link btn btn-primary' %>
+                </li>
                 <li class="nav-item">
                   <%= link_to "ログイン", new_user_session_path, class: 'nav-link btn btn-primary' %>
                 </li>
