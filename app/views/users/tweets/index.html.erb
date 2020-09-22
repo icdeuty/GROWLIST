@@ -1,2 +1,34 @@
 Tweetsの一覧を表示するページ
 <%= link_to '新規投稿', new_users_tweet_path(current_user), class: 'btn btn-primary'%>
+
+<h2>ツイート一覧</h2>
+<%= link_to 'ツイートを投稿する', new_users_tweet_path, {class: 'btn btn-primary withripple' }%>
+<%= link_to '自分のツイート一覧へ', users_show_tweets_path, {class: 'btn btn-primary withripple' }%>
+<% @tweets.each do |tweet| %>
+	<div class="container-fluid">
+    <div class="contents row" >
+    <div class="name3">
+   	  <% if @user.profile_img.blank? %>
+		<%= attachment_image_tag @user, :profile_img_id, :fill, 60, 60, class: "img-circle pull-left profile-thumb", fallback: "no_image.jpg" %>
+		<%= link_to tweet.user.name, users_user_path(tweet.user), method: :get %>さん</div>
+		<% else %>
+		  <%= image_tag attachment_url(@user, :profile_img, :fill, 50, 50, format: "jpg"),class: "img-circle pull-left profile-thumb", fallback: "no_image.jpg" %>
+    	  <%= link_to tweet.user.name, users_user_path(tweet.user), method: :get %>さん</div>
+      <% end %>
+
+	      <div class="name2"><%= tweet.created_at.strftime("%Y-%m-%d %H:%M") %></div>
+	      <div class="name3"><%= simple_format(tweet.text) %></div>
+	      <div class="name2"><%= link_to '詳細', users_tweet_path(tweet), method: :get %></div>
+
+	      <% if user_signed_in? && current_user.id == tweet.user_id %>
+	      <div class="name2">
+	       <%= link_to '編集', edit_users_tweet_path(tweet), method: :get %>
+	      </div>
+	      <div class="name2">
+	       <%= link_to '削除', users_tweet_path(tweet.id), method: :delete %>
+	      </div>
+    	　　<% end %>
+        </div>
+		</div>
+<% end %>
+  <%= paginate(@tweets) %>

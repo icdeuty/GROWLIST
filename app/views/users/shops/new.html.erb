@@ -1,1 +1,47 @@
 花屋の新規投稿ページ
+
+<h1> 花屋を新規登録してシェア！ </h1>
+<%= form_with scope: :shop, url: users_shops_path(current_user), local: true do |form| %>
+	<% if @shop.errors.any? %>
+	<div id="error_explanation">
+		<h2>
+			<%= pluralize(@shop.errors.count, "error") %> prohibited this article from being saved:
+		</h2>
+		<ul>
+			<% @shop.errors.full_messages.each do |msg| %>
+			<li><%= msg %></li>
+			<% end %>
+		</ul>
+	</div>
+	<% end %>
+
+	<p>
+		<%= form.label :SHOP名 %><br>
+		<%= form.text_field :shop_name %>
+	</p>
+	<p>
+		<%= form.label :SHOPの特徴 %><br>
+		<%= form.text_field :feature %>
+	</p>
+	<p>
+		<%= form.label :郵便番号 %><br>
+		<%= form.text_field :postal_code %>
+	</p>
+	<p>
+		<%= form.label :住所 %><br>
+		<%= form.text_field :address %>
+	</p>
+	<p>
+		<%= form.label :電話番号 %><br>
+		<%= form.text_field :phone_number %>
+	</p>
+	<p>
+		<%= form.label :おすすめポイント %><br>
+		<%= form.text_field :point %>
+	</p>
+
+
+	<p>
+		<%= form.submit '投稿する' %>
+	</p>
+<% end %>

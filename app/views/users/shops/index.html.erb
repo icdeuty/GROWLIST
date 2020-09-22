@@ -1,3 +1,29 @@
 花屋の一覧を表示するページ
 
 <%= link_to '新規投稿', new_users_shop_path(current_user), class: 'btn btn-primary'%>
+
+<h1>花屋一覧</h1>
+<table>
+	<tr>
+		<th>SHOP名</th>
+		<th>SHOPの特徴</th>
+		<th>郵便番号</th>
+		<th>住所</th>
+		<th>電話番号</th>
+		<th>おすすめポイント</th>
+		<th>画像</th>
+	</tr>
+
+	<% @shops.each do |shop| %>
+		<tr>
+			<td><%= shop.shop_name %></td>
+			<td><%= shop.feature %></td>
+			<td><%= shop.postal_code %></td>
+			<td><%= shop.address %></td>
+			<td><%= shop.phone_number %></td>
+			<td><%= shop.point %></td>
+			<td><%= attachment_image_tag @shop, :img %></td>
+		</tr>
+	<% end %>
+
+</table>

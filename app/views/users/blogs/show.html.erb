@@ -1,0 +1,11 @@
+ブログの本文表示ページ
+
+
+
+	<%= @blog.title %>
+	<%= @blog.text %>
+	<% if @blog.img.blank? %>
+	<% else %>
+		<%= image_tag attachment_url(@blog, :img, :fill, 100, 100, format: "jpg") %>
+	<% end %>
+

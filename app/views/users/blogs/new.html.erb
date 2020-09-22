@@ -1,1 +1,35 @@
 ブログの新規投稿ページ
+
+<h1> New Article </h1>
+<%= form_with model: @blog, url: users_blogs_path(current_user), local: true do |form| %>
+	<% if @blog.errors.any? %>
+	<div id="error_explanation">
+		<h2>
+			<%= pluralize(@blog.errors.count, "error") %> prohibited this article from being saved:
+		</h2>
+		<ul>
+			<% @blog.errors.full_messages.each do |msg| %>
+			<li><%= msg %></li>
+			<% end %>
+		</ul>
+	</div>
+	<% end %>
+
+	<p>
+		<%= form.label :タイトル %><br>
+		<%= form.text_field :title %>
+	</p>
+
+
+	<p>
+		<%= form.label :本文 %><br>
+		<%= form.text_area :text %>
+	</p>
+	<p>
+		<%= form.label :画像 %><br/>
+		<%= form.attachment_field :img %>
+	</p>
+	<p>
+		<%= form.submit '投稿する' %>
+	</p>
+<% end %>
