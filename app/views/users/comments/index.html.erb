@@ -1,0 +1,74 @@
+
+
+<%= link_to @tweet.user.name, users_user_path(@tweet.user), method: :get %>さんの以下のタネにコメントする
+
+
+
+<pre>
+   	 <form class="form-inline-block">
+   	 <div class="form-group">
+   	  <% if @tweet.user.profile_img.blank? %>
+		<%= attachment_image_tag @tweet.user, :profile_img_id, :fill, 80, 80, class: "img-circle pull-left profile-thumb", fallback: "no_image.jpg" %>
+		<% else %>
+		  <%= image_tag attachment_url(@tweet.user, :profile_img, :fill, 80, 80, format: "jpg"),class: "img-circle pull-left profile-thumb", fallback: "no_image.jpg" %>
+      <% end %>
+  	</div>
+    <div class="form-group"><%= simple_format(@tweet.text) %></div>
+    <div class="form-group"><%= @tweet.created_at.strftime("%Y-%m-%d %H:%M") %></div>
+    </form>
+</pre>
+
+
+
+
+
+
+
+
+<div class="comment-list bt style-2" id="comments">
+	<div class="float-wrapper">
+		<h5 class="comment-count">コメント数：<%= @tweet.comments.count %></h5>
+
+<ol>
+	<% @tweet.comments.each do |comment| %>
+	<li class="comment">
+		<div class="comment-body bb">
+			<% if comment.user.profile_img.blank? %>
+				<%= attachment_image_tag comment.user, :profile_img_id, :fill, 60, 60, class: "img-circle pull-left profile-thumb", fallback: "no_image.jpg" %>
+				<%= link_to comment.user.name, users_user_path(comment.user), method: :get %>さん
+			<% else %>
+				  <%= image_tag attachment_url(comment.user, :profile_img, :fill, 50, 50, format: "jpg"),class: "img-circle pull-left profile-thumb", fallback: "no_image.jpg" %>
+		    	  <%= link_to comment.user.name, users_user_path(comment.user), method: :get %>さん
+		    <% end %>
+		</div>
+		<div class="comment-text">
+			<div class="comment-author clearfix">
+					<div class="comment-entry"><%= comment.text %></div>
+					(<span class="comment-date"><%= comment.created_at.strftime('%Y/%m/%d') %></span>)
+			</div>
+		</div>
+	</li>
+
+      <% if user_signed_in? && current_user.id == comment.user_id %>
+      	<div class="name2">
+       		<%= link_to '編集', edit_users_tweet_comment_path(@tweet,comment), method: :get %>
+      	</div>
+      	<div class="name2">
+       		<%= link_to '削除', users_tweet_comment_path(@tweet,comment), method: :delete %>
+      	</div>
+	　<% end %>
+
+	<% end %>
+</ol>
+
+<%= form_for @comment, url: users_tweet_comments_path(@tweet),method: :post do |f| %>
+	<div class="row">
+		<div class="col-sm-12">
+			<%= f.text_area :text, rows:'4', class: "form-control",placeholder: "コメントをここに入力" %>
+		</div>
+	</div>
+	<%= f.submit "送信する", class: "btn btn-lg btn-base-1 mt-15 pull-right" %>
+<% end %>
+
+	</div>
+</div>

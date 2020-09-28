@@ -1,11 +1,45 @@
-ブログの本文表示ページ
 
 
+<link rel="stylesheet" href="blogs.scss">
 
-	<%= @blog.title %>
-	<%= @blog.text %>
-	<% if @blog.img.blank? %>
+<div class="container">
+<div class="row">
+
+<div class="col-md-3">
+	<p>左側にはこのユーザの他の記事</p>
+	<% if @user.profile_img.blank? %>
+	<%= attachment_image_tag @user, :profile_img_id, :fill, 150, 150, class: "img-circle pull-left profile-thumb", fallback: "no_image.jpg" %>
 	<% else %>
-		<%= image_tag attachment_url(@blog, :img, :fill, 100, 100, format: "jpg") %>
-	<% end %>
+	<%= image_tag attachment_url(@user, :profile_img, :fill, 150, 150, format: "jpg"),class: "img-circle pull-left profile-thumb" %>
+	<% end %><br />
 
+	<%= render partial: 'users/relationships/follow_button',locals: { user: @user } %>
+	<h5>ユーザー名</h5>
+	<%= link_to @user.name,users_user_path(@user) %>
+	<h5>プロフィール</h5>
+	<%= @user.profile %>
+
+	<h5>その他の記事</h5>
+	
+	</div>
+
+
+<div class="col-md-9">
+	<div class="body">
+		<h1 class="title">
+			<%= @blog.title %>
+		</h1>
+		<div class="text">
+			<%= @blog.text %>
+		</div>
+		<div clasS="image">
+			<% if @blog.img.blank? %>
+			<% else %>
+				<%= image_tag attachment_url(@blog, :img, :fill, 400, 400, format: "jpg") %>
+			<% end %>
+		</div>
+	</div>
+
+</div>
+</div>
+</div>

@@ -77,3 +77,7 @@ gem "refile-mini_magick"
 gem 'kaminari', '~> 0.17.0'
 
 gem 'pry-rails'
+
+gem 'jp_prefecture'
+
+gem 'ransack'

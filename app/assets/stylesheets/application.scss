@@ -16,3 +16,18 @@
 
 @import "bootstrap-sprockets";
 @import "bootstrap";
+
+@media (min-width: 768px){
+  .navbar-nav{
+      margin: 0 auto;
+      display: table;
+      table-layout: fixed;
+      float:none;
+  }
+
+  .form-item_session{
+  	  width: 20px;
+  	  height: 20px;
+  	  display: inline-block;
+  }
+}

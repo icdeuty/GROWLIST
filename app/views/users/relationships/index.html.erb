@@ -1,3 +1,34 @@
-フォロー・フォロワー一覧を表示するページ
 
-<%= render partial: 'users/relationships/follow_button',locals: { user: @user } %>
+<h2>フォロー・フォロワー一覧</h2>
+
+<% if @users.count > 0 %>
+　<table class='table'>
+  <thead>
+    <tr>
+      <th>image</th>
+      <th>name</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @users.each do |user| %>
+      <tr>
+        <td><%= attachment_image_tag(user, :profile_img, :fill, 50, 50, fallback: "no-image-icon.jpg") %></td>
+        <td><%= user.name %></td>
+        <td>フォロー数：<%= user.followings.count %></td>
+        <td>フォロワー数：<%= user.followers.count %></td>
+        <td>
+          <% if current_user != user %>
+              <%= render partial: 'users/relationships/follow_button',locals: { user: user } %>
+          <% end %>
+        </td>
+        <td><%= link_to 'Show',users_user_path(user) , class: "user_#{user.id}" %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<% else %>
+ <p>ユーザーはいません</p>
+<% end %>

@@ -2,57 +2,76 @@
 <html>
   <head>
     <title>GROWLIST</title>
+    <script src="https://kit.fontawesome.com/8de8056175.js" crossorigin="anonymous"></script>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
   <body>
-      <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        
+    <header>
+      <div class="social"></div>
+    </header>
+    <% if user_signed_in? %>
+    <p class="text-center"><%= link_to image_tag('GROWLIST-logo.png', :size => '420x140'),users_users_top_path  %></p>
+    <% else %>
+    <p class="text-center"><%= link_to image_tag('GROWLIST-logo.png', :size => '420x140'),root_path  %></p>
+    <% end %>
+      <br>
+      <nav class="navbar navbar-expand-lg navbar-inverse">
+        <div class="collapse navbar-collapse justify-content-center">
         <ol class="navbar-nav" style="list-style: none">
 
               <% if user_signed_in? %>
-              <p class="navbar-brand"><%= link_to "GROWLIST",users_users_top_path  %></p>
-                <li class="nav-item">
-                  <%= link_to "マイページ", users_user_path(current_user), class: 'nav-link btn btn-primary' %>
+              
+                <li  class="nav-item ">
+                  <%= link_to "マイページ", users_user_path(current_user), class: 'nav-link btn btn-dark' %>
                 </li>
                 <li class="nav-item">
-                  <%= link_to "タネ一覧", users_tweets_path(current_user), class: 'nav-link btn btn-primary' %>
+                  <%= link_to "タネ一覧", users_tweets_path, class: 'nav-link btn btn-dark' %>
                 </li>
                  <li class="nav-item">
-                  <%= link_to "ブログ一覧", users_blogs_path(current_user), class: 'nav-link btn btn-primary' %>
+                  <%= link_to "ブログ一覧", users_blogs_path, class: 'nav-link btn btn-dark' %>
                 </li>
                  <li class="nav-item">
-                  <%= link_to "花屋一覧", users_shops_path(current_user), class: 'nav-link btn btn-primary' %>
+                  <%= link_to "花屋一覧", users_shops_path, class: 'nav-link btn btn-dark' %>
                 </li>
                 <li class="nav-item">
-                  <%= link_to "ログアウト", destroy_user_session_path, method: :delete, class: 'nav-link btn btn-success' %>
+                  <%= link_to "ログアウト", destroy_user_session_path, method: :delete, class: 'nav-link btn btn-dark' %>
                 </li>
                
-              <% elsif admin_signed_in?%>
-              <p class="navbar-brand"><%= link_to "GROWLIST",admins_users_path  %></p>
+              <% elsif admin_signed_in? %>
                 <li class="nav-item">
-                  <%= link_to "ログアウト", destroy_user_session_path, method: :delete, class: 'nav-link btn btn-primary' %>
+                  <%= link_to "ユーザー一覧", admins_users_path, class: 'nav-link btn btn-dark' %>
                 </li>
                 <li class="nav-item">
-                  <%= link_to "編集", edit_user_registration_path, class: 'nav-link btn btn-primary' %>
+                  <%= link_to "ブログ記事一覧", admins_blogs_path, class: 'nav-link btn btn-dark' %>
                 </li>
+                <li class="nav-item">
+                  <%= link_to "タネ一覧", admins_tweets_path, class: 'nav-link btn btn-dark' %>
+                </li>
+                <li class="nav-item">
+                  <%= link_to "登録済花屋一覧", admins_shops_path, class: 'nav-link btn btn-dark' %>
+                </li>
+                <li class="nav-item">
+                  <%= link_to "ログアウト", destroy_user_session_path, method: :delete, class: 'nav-link btn btn-dark' %>
+                </li>
+
               <% else %>
-              <p class="navbar-brand"><%= link_to "GROWLIST",root_path  %></p>
+              
                <li class="nav-item">
-                  <%= link_to "About", homes_about_path, class: 'nav-link btn btn-primary' %>
+                  <%#= link_to "About", homes_about_path, class: 'nav-link btn btn-dark' %>
                 </li>
                 <li class="nav-item">
-                  <%= link_to "ログイン", new_user_session_path, class: 'nav-link btn btn-primary' %>
+                  <%= link_to "ログイン", new_user_session_path, class: 'nav-link btn btn-dark' %>
                 </li>
                 <li class="nav-item">
-                  <%= link_to "新規登録", new_user_registration_path, class: 'nav-link btn btn-primary' %>
+                  <%= link_to "新規登録", new_user_registration_path, class: 'nav-link btn btn-dark' %>
                 </li>
               <% end %>
         </ol>
+      </div>
        </nav>
     <%= yield %>
   </body>

@@ -1,0 +1,46 @@
+<div class="comment-list bt style-2" id="comments">
+	<div class="float-wrapper">
+		<h5 class="comment-count">コメント数：<%= @blog.blog_comments.count %></h5>
+<ol>
+	<% @blog.blog_comments.each do |blog_comment| %>
+	<li class="comment">
+		<div class="comment-body bb">
+			<% if comment.user.profile_img.blank? %>
+				<%= attachment_image_tag blog_comment.user, :profile_img_id, :fill, 60, 60, class: "img-circle pull-left profile-thumb", fallback: "no_image.jpg" %>
+				<%= link_to blog_comment.user.name, users_user_path(blog_comment.user), method: :get %>さん
+			<% else %>
+				  <%= image_tag attachment_url(blog_comment.user, :profile_img, :fill, 50, 50, format: "jpg"),class: "img-circle pull-left profile-thumb", fallback: "no_image.jpg" %>
+		    	  <%= link_to blog_comment.user.name, users_user_path(blog_comment.user), method: :get %>さん
+		    <% end %>
+		</div>
+		<div class="comment-text">
+			<div class="comment-author clearfix">
+					<div class="comment-entry"><%= blog_comment.text %></div>
+					(<span class="comment-date"><%= blog_comment.created_at.strftime('%Y/%m/%d') %></span>)
+			</div>
+		</div>
+	</li>
+
+      <% if user_signed_in? && current_user.id == comment.user_id %>
+      	<div class="name2">
+       		<%= link_to '編集', edit_users_blog_comment_comment_path(@blog,blog_comment), method: :get %>
+      	</div>
+      	<div class="name2">
+       		<%= link_to '削除', users_blog_blog_comment_path(@blog,blog_comment), method: :delete %>
+      	</div>
+	　<% end %>
+
+	<% end %>
+</ol>
+
+<%= form_for @blog_comment, url: users_blog_blog_comments_path(@blog),method: :post do |f| %>
+	<div class="row">
+		<div class="col-sm-12">
+			<%= f.text_area :text, rows:'4', class: "form-control",placeholder: "コメントをここに入力" %>
+		</div>
+	</div>
+	<%= f.submit "送信する", class: "btn btn-lg btn-base-1 mt-15 pull-right" %>
+<% end %>
+
+	</div>
+</div>

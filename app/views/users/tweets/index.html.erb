@@ -1,34 +1,78 @@
-Tweetsの一覧を表示するページ
-<%= link_to '新規投稿', new_users_tweet_path(current_user), class: 'btn btn-primary'%>
-
-<h2>ツイート一覧</h2>
-<%= link_to 'ツイートを投稿する', new_users_tweet_path, {class: 'btn btn-primary withripple' }%>
-<%= link_to '自分のツイート一覧へ', users_show_tweets_path, {class: 'btn btn-primary withripple' }%>
-<% @tweets.each do |tweet| %>
-	<div class="container-fluid">
-    <div class="contents row" >
-    <div class="name3">
-   	  <% if @user.profile_img.blank? %>
-		<%= attachment_image_tag @user, :profile_img_id, :fill, 60, 60, class: "img-circle pull-left profile-thumb", fallback: "no_image.jpg" %>
-		<%= link_to tweet.user.name, users_user_path(tweet.user), method: :get %>さん</div>
-		<% else %>
-		  <%= image_tag attachment_url(@user, :profile_img, :fill, 50, 50, format: "jpg"),class: "img-circle pull-left profile-thumb", fallback: "no_image.jpg" %>
-    	  <%= link_to tweet.user.name, users_user_path(tweet.user), method: :get %>さん</div>
-      <% end %>
-
-	      <div class="name2"><%= tweet.created_at.strftime("%Y-%m-%d %H:%M") %></div>
-	      <div class="name3"><%= simple_format(tweet.text) %></div>
-	      <div class="name2"><%= link_to '詳細', users_tweet_path(tweet), method: :get %></div>
-
-	      <% if user_signed_in? && current_user.id == tweet.user_id %>
-	      <div class="name2">
-	       <%= link_to '編集', edit_users_tweet_path(tweet), method: :get %>
-	      </div>
-	      <div class="name2">
-	       <%= link_to '削除', users_tweet_path(tweet.id), method: :delete %>
-	      </div>
-    	　　<% end %>
-        </div>
+<%#= link_to '自分のタネ一覧へ', users_show_tweets_path, {class: 'btn btn-primary withripple' }%>
+<br/>
+<br/>
+<div class="container">
+	<div class="row">
+		<div class="col-md-4">
+			<%= form_tag(users_tweets_path, method: :post) do %>
+				<h3>
+					タネを投稿する
+				</h3>	
+				<textarea rows="2" cols="40" name="text" placeholder ="内容を入力" rows="10"></textarea>
+				<br/>
+				<input type="submit" value="投稿する">
+			<% end %>
+			<br/>
+			<br/>
+			<%= search_form_for @search, url: users_tweets_path do |f| %>
+				<%= f.label :text_cont, 'キーワードでタネを検索' %>
+				<%= f.search_field :text_cont %>
+				<%= f.submit '検索する' %>
+			<% end %>
 		</div>
-<% end %>
-  <%= paginate(@tweets) %>
+		
+		<h1 class="pull-left">まかれたタネ<span class="glyphicon glyphicon-leaf" aria-hidden="true"></span></h1>
+		
+		<div class="col-md-6">
+			<%#= link_to '新しいタネをまく', new_users_tweet_path, {class: 'btn btn-primary text-center' }%>
+			<% if @tweets.exists? %>
+			<% @tweets.each do |tweet| %>
+			    <div class="name3">
+			   	  <% if tweet.user.profile_img.blank? %>
+					<%= attachment_image_tag tweet.user, :profile_img_id, :fill, 60, 60, class: "img-circle pull-left profile-thumb", fallback: "no_image.jpg" %>
+					<%= link_to tweet.user.name, users_user_path(tweet.user), method: :get %>さん
+					<% else %>
+					  <%= image_tag attachment_url(tweet.user, :profile_img, :fill, 50, 50, format: "jpg"),class: "img-circle pull-left profile-thumb", fallback: "no_image.jpg" %>
+			    	  <%= link_to tweet.user.name, users_user_path(tweet.user), method: :get %>さん
+			      <% end %>
+			    </div>
+			    <div class="name2"><%= tweet.created_at.strftime("%Y-%m-%d %H:%M") %></div>
+			    <div class="name3"><%= simple_format(tweet.text) %></div>
+			    <!-- <div class="name2"><%#= link_to '詳細', users_tweet_path(tweet.user), method: :get %></div> -->
+			    <%= link_to "コメント", users_tweet_comments_path(tweet.id) %>
+
+			    <!-- <いいね実装> -->
+			    <% if tweet.favorited_by?(current_user) %>
+			    	<%= link_to users_tweet_tweet_favs_path(tweet), method: :delete do %>
+			    		<i class="fa fa-heart" aria-hidden="true" style="color: red;"></i>
+			    		<%= tweet.tweet_favs.count %>いいね！
+			    	<% end %>
+	
+			    <% else %>
+			    	<%= link_to users_tweet_tweet_favs_path(tweet), method: :post do %>
+			    		<i class="fa fa-heart" aria-hidden="true"></i>
+			    		<%= tweet.tweet_favs.count %>いいね！
+			    	<% end %>
+			    <% end %>
+
+
+			      <% if user_signed_in? && current_user.id == tweet.user_id %>
+			      	<div class="name2">
+			       		<%= link_to '編集', edit_users_tweet_path(tweet), method: :get %>
+			      	</div>
+			      	<div class="name2">
+			       		<%= link_to '削除', users_tweet_path(tweet.id), method: :delete %>
+			      	</div>
+		    	　<% end %>
+		    	<% end %>
+		    <% else %>
+		    	<h4>＊まだタネがまかれていません＊</h4>
+		    <% end %>
+   		</div>
+
+   		<div class="col-md-2">
+   		</div>
+   </div>
+</div>
+
+  <%= paginate(@tweets_paginate) %>

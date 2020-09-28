@@ -1,20 +1,159 @@
-マイページ
-
-<%= link_to 'プロフィールを編集する', edit_users_user_path(current_user), class: 'btn btn-primary'%>
-<%= link_to 'フォロー/フォロワーを見る', users_relationships_path(current_user), class: 'btn btn-primary'%>
+<link rel="stylesheet" href="users.scss">
 
 
-<h1>About me</h1>
+<h1>About me<span class="glyphicon glyphicon-user" aria-hidden="true"></span></h1>
 
-<h3>ユーザー名</h3>
-<%= @user.name %>
-<h3>プロフィール</h3>
-<%= @user.profile %>
-<h3>プロフィール画像</h3>
-<% if @user.profile_img.blank? %>
-<%= attachment_image_tag @user, :profile_img_id, :fill, 60, 60, class: "img-circle pull-left profile-thumb", fallback: "no_image.jpg" %>
-<% else %>
-<%= image_tag attachment_url(@user, :profile_img, :fill, 300, 300, format: "jpg"),class: "img-circle pull-left profile-thumb" %>
-<% end %>
+<div class="container">
+	<div class="row">
+		<div class="col-md-3">
+			<h3>name</h3>
+			<%= @user.name %>
+			<br/>
+			<br/>
+			<%= render partial: 'users/relationships/follow_button',locals: { user: @user } %>
+			<h3>about myself</h3>
+			<%= @user.profile %>
+			<br/>
+			<br/>
+			<% if @user.profile_img.blank? %>
+			<%= attachment_image_tag @user, :profile_img_id, :fill, 250, 250, class: "img-circle pull-left profile-thumb", fallback: "no_image.jpg" %>
+			<% else %>
+			<%= image_tag attachment_url(@user, :profile_img, :fill, 250, 250, format: "jpg"),class: "img-circle pull-left profile-thumb" %>
+			<% end %>
+			<br/>
+			<br/>
+			<%= link_to 'フォロー/フォロワーを見る', users_relationships_path, class: 'btn btn-primary'%>
+			<br/>
+			<br/>
+			<%= link_to 'プロフィールを編集する', edit_users_user_path(current_user), class: 'btn btn-primary'%>
+		</div>
 
-<%= render partial: 'users/relationships/follow_button',locals: { user: @user } %>
+		<div class="col-md-6">
+
+			<h3><%= @user.name %>さんのまいたタネ</h3>
+			<% if @tweets.exists? %>
+				<% @user.tweets.each do |tweet| %>
+			   	  <% if tweet.user.profile_img.blank? %>
+					<%= attachment_image_tag tweet.user, :profile_img_id, :fill, 60, 60, class: "img-circle pull-left profile-thumb", fallback: "no_image.jpg" %>
+					<%#= link_to tweet.user.name, users_user_path(tweet.user), method: :get %
+					<% else %>
+					  <%= image_tag attachment_url(tweet.user, :profile_img, :fill, 50, 50, format: "jpg"),class: "img-circle pull-left profile-thumb", fallback: "no_image.jpg" %>
+			    	  <%#= link_to tweet.user.name, users_user_path(tweet.user), method: :get %>
+			      <% end %>
+
+				      <div class="name2"><%= tweet.created_at.strftime("%Y-%m-%d %H:%M") %></div>
+				      <div class="name3"><%= simple_format(tweet.text) %></div>
+				      <div class="name2"><%#= link_to '詳細', users_tweet_path(tweet.user), method: :get %></div>
+				      
+				      <%= link_to "コメント", users_tweet_comments_path(tweet.id) %>
+				      <%= tweet.comments.count %>/
+
+				      <% if tweet.favorited_by?(current_user) %>
+			    		<%= link_to users_tweet_tweet_favs_path(tweet), method: :delete do %>
+			    			<i class="fa fa-heart" aria-hidden="true" style="color: red;">いいね！</i>
+			    		<% end %>
+			    		<%= tweet.tweet_favs.count %>
+			    	  <% else %>
+			    		<%= link_to users_tweet_tweet_favs_path(tweet), method: :post do %>
+			    			<i class="fa fa-heart" aria-hidden="true">いいね！</i>
+			    	  <% end %>
+			    	  <%= tweet.tweet_favs.count %>
+			    <% end %>
+
+				      <% if user_signed_in? && current_user.id == tweet.user_id %>
+				      <div class="name2">
+				       <%= link_to '編集', edit_users_tweet_path(tweet), method: :get %>
+				      </div>
+				      <div class="name2">
+				       <%= link_to '削除', users_tweet_path(tweet.id), method: :delete %>
+				      </div>
+			    	　　<% end %>
+				<% end %>
+			<% else %>
+				<h4>＊まだタネはまいていません＊</h4>
+			<% end %>
+			<%= paginate(@tweets) %>
+
+			<h3><%= @user.name %>さんのブログ記事</h3>
+			<% if @blogs.exists? %>
+				<% @user.blogs.each do |blog| %>
+			   	  <%# if blog.user.profile_img.blank? %>
+					<%#= attachment_image_tag blog.user, :profile_img_id, :fill, 60, 60, class: "img-circle pull-left profile-thumb", fallback: "no_image.jpg" %>
+					<%#= link_to blog.user.name, users_user_path(blog.user), method: :get %>
+					<%# else %>
+					  <%#= image_tag attachment_url(blog.user, :profile_img, :fill, 50, 50, format: "jpg"),class: "img-circle pull-left profile-thumb", fallback: "no_image.jpg" %>
+			    	  <%#= link_to blog.user.name, users_user_path(blog.user), method: :get %>
+			      <%# end %>
+
+				      <div class="name2"><%= blog.created_at.strftime("%Y-%m-%d %H:%M") %></div>
+				      <div class="name3"><%= link_to blog.title, users_blog_path(blog) %></div>
+				      <!-- <div class="name2"><%#= link_to '詳細', users_blog_path(blog.user), method: :get %></div>  -->
+				      <% if blog.img.blank? %>
+						<div></div>
+					  <% else %>
+						<%= image_tag attachment_url(blog, :img, :fill, 50, 50, format: "jpg") %>
+					  <% end %>
+				      <%#= link_to "コメント", users_blog_comment_path(blog.id) %>
+
+				      <% if user_signed_in? && current_user.id == blog.user_id %>
+				      <div class="name2">
+				       <%= link_to '編集', edit_users_blog_path(blog), method: :get %>
+				      </div>
+				      <div class="name2">
+				       <%= link_to '削除', users_blog_path(blog.id), method: :delete %>
+				      </div>
+			    	　　<% end %>
+				<% end %>
+			<% else %>
+				<h4>＊まだブログ記事はありません＊</h4>
+			<% end %>
+
+			<h3><%= @user.name %>さんのシェアした花屋</h3>
+			<% if @shops.exists? %>
+				<% @user.shops.each do |shop| %>
+			   	  <% if shop.user.profile_img.blank? %>
+					<%= attachment_image_tag shop.user, :profile_img_id, :fill, 60, 60, class: "img-circle pull-left profile-thumb", fallback: "no_image.jpg" %>
+					<%#= link_to shop.user.name, users_user_path(shop.user), method: :get %>
+					<% else %>
+					  <%= image_tag attachment_url(shop.user, :profile_img, :fill, 50, 50, format: "jpg"),class: "img-circle pull-left profile-thumb", fallback: "no_image.jpg" %>
+			    	  <%#= link_to shop.user.name, users_user_path(shop.user), method: :get %>
+			      <% end %>
+			      	  <strong><%= shop.shop_name %></strong>
+				      <div class="name2"><%= shop.created_at.strftime("%Y-%m-%d %H:%M") %></div>
+				      <div class="name3"><%= simple_format(shop.point) %></div>
+				      <div class="name2"><%= link_to '詳細', users_shop_path(shop), method: :get %></div> 
+				      <%#= link_to "コメント", users_blog_comment_path(blog.id) %>
+
+				      <% if user_signed_in? && current_user.id == shop.user_id %>
+				      <div class="name2">
+				       <%= link_to '編集', edit_users_shop_path(shop), method: :get %>
+				      </div>
+				      <div class="name2">
+				       <%= link_to '削除', users_shop_path(shop.id), method: :delete %>
+				      </div>
+			    	　　<% end %>
+				<% end %>
+			<% else %>
+				<h4>＊まだシェアした花屋はありません＊</h4>
+			<% end %>
+
+		</div>
+		<!-- <div class="col-md-3">
+			 <h5><%#= @user.name %>さんのいいね！したタネ</h5>
+			 		<%# end %>
+				 <%# else %>
+				 	<h5>＊まだいいね！はありません＊</h5>
+				 <%# end %>
+			 <h5><%#= @user.name %>さんのいいね！したブログ記事</h5>
+			 	<%# if @tweets.exists? %>
+			 	<%# else %>
+			 	<h5>＊まだいいね！はありません＊</h5>
+			 	<%# end %>
+			 <h5><%#= @user.name %>さんのいいね！した花屋さん</h5>
+			 	<%# if @tweets.exists? %>
+			 	<%# else %>
+			 	<h5>＊まだいいね！はありません＊</h5>
+			 	<%# end %>
+		</div> -->
+	</div>
+</div>

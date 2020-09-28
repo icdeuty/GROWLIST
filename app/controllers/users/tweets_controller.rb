@@ -1,7 +1,12 @@
 class Users::TweetsController < ApplicationController
 	def index
 		@user = current_user
-		@tweets = Tweet.page(params[:page])
+		@tweets_paginate = Tweet.page(params[:page])
+		@tweets = Tweet.all.order(created_at: :desc)
+		@search = Tweet.ransack(params[:q])
+		@tweets = @search.result
+		#@tweet = Tweet.find(params[:id])
+		
 		#@search = Tweet.search(params[:q])
 		#@tweets = @search.result.includes(:user).order("created_at DESC").page(params[:page]).per(20)
 	end
@@ -25,7 +30,7 @@ class Users::TweetsController < ApplicationController
 	end
 
 	def edit
-		@tweet = Tweet.find(params[:id])
+		@tweet = current_user.tweets.find_by(id: params[:id])
 	end
 
 	def update
