@@ -1,3 +1,27 @@
 // Place all the styles related to the shops controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+
+@media (min-width: 768px){
+
+	.flex {
+		  background-color: #fff;
+		  height: auto;
+		  padding: 10px;
+		  display: flex;
+		  flex-direction: row;
+		  flex-wrap: wrap;
+		  justify-content: space-between;
+		}
+	.flex > div {
+		  background-color: #fff;
+		  width: 25vh;
+		  margin: 5px;
+		  font-size: 30px;
+		  flex-wrap: wrap;
+		}
+	.flex-contanier{
+		  flex-wrap: wrap;
+	}
+}

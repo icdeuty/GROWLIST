@@ -1,0 +1,48 @@
+<div class="container">
+	<div class="row">
+		<div class="col-md-4">
+			<%= image_tag '地図用.jpg',:size => '300x300' %>
+		</div>
+
+		<div class="col-md-8">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+				   <div class="panel-title"><h2><strong><%= @shop.shop_name %></strong></h2></div><br/>
+				</div>
+			<div class="panel-body">
+			  <div class="table-responsive">
+				<table class=table>
+					<tr>
+						<th class="col-md-4">シェアした人</th>
+						<td><%= @shop.user.name %>さん</td>
+					</tr>
+					<tr>
+						<th>一言で表現すると・・・</th>
+						<td><%= @shop.feature %></td>
+					</tr>
+					<tr>
+						<th>郵便番号</th>
+						<td><%= @shop.postal_code %></td>
+					</tr>
+					<tr>
+						<th>住所</th>
+						<td><%= @shop.prefecture_code %>
+						<%= @shop.address_city %>
+						<%= @shop.address_building %></td>
+					</tr>
+					<tr>
+						<th>電話番号</th>
+						<td><%= @shop.phone_number %></td>
+					</tr>
+					<tr>
+						<th>おすすめする理由は？</th>
+						<td><%= @shop.point %></td>
+					</tr>
+				</table>
+			</div>
+			</div>
+			</div>
+		</div>
+
+	</div>
+</div>

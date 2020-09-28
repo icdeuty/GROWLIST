@@ -1,0 +1,8 @@
+
+
+ <%= form_for @comment, url: users_tweet_comment_path(@comment),method: :patch do |f| %>
+  <h4>コメントの変更</h4>
+  <%= f.text_area :text, rows:'4', class: "form-control",placeholder: "コメントをここに入力" %>
+  <%= f.submit 'コメントを更新する',class: "btn btn-lg btn-base-1 mt-15 pull-right" %>
+<% end %>
+

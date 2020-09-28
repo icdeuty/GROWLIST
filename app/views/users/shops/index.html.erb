@@ -1,29 +1,31 @@
-花屋の一覧を表示するページ
+<link rel="stylesheet" href="shops.scss">
 
 <%= link_to '新規投稿', new_users_shop_path(current_user), class: 'btn btn-primary'%>
 
-<h1>花屋一覧</h1>
-<table>
-	<tr>
-		<th>SHOP名</th>
-		<th>SHOPの特徴</th>
-		<th>郵便番号</th>
-		<th>住所</th>
-		<th>電話番号</th>
-		<th>おすすめポイント</th>
-		<th>画像</th>
-	</tr>
+<h1>花屋を探す<span class="glyphicon glyphicon-home" aria-hidden="true"></span>
+</h1>
 
-	<% @shops.each do |shop| %>
-		<tr>
-			<td><%= shop.shop_name %></td>
-			<td><%= shop.feature %></td>
-			<td><%= shop.postal_code %></td>
-			<td><%= shop.address %></td>
-			<td><%= shop.phone_number %></td>
-			<td><%= shop.point %></td>
-			<td><%= attachment_image_tag @shop, :img %></td>
-		</tr>
-	<% end %>
+<div class="container">
+	<div class="row">
+		<div class="flex">
+		<% if @shops.exists? %>
+		<% @shops.each do |shop| %>
+			<div>
+				<% if shop.img_id.blank? %>
+					<%= attachment_image_tag shop, :img_id, :fill, 500, 500, fallback: "no_image.jpg" %>
+				<% else %>
+					<%= image_tag attachment_url(shop, :img, :fill, 500, 500, format: "jpg") %>
+				<% end %>
+				<h5><%= link_to shop.shop_name, users_shop_path(shop) %></h5>
+				<!-- <h5><%#= shop.created_at.strftime("%Y-%m-%d") %></h5> -->
+				<!-- <h5><%#= link_to blog.user.name, users_user_path(blog.user), method: :get %>さん</h5> -->
+			</div>
+		<% end %>
+		<% else %>
+		<h4>＊まだシェアされた花屋はありません＊</h4>
+		<% end %>
+		</div>
+	</div>
+</div>
 
-</table>
+

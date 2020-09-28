@@ -5,19 +5,22 @@ def index
 
 	def new
 		@shop = Shop.new
-	end
 
-	def show
-		@shop = Shop.find(params[:id])
 	end
 
 	def create
 		@shop = Shop.new(shop_params)
+		@shop.user_id = current_user.id
 		if @shop.save
 			redirect_to users_shops_path(current_user)
 		else
 			render 'new'
 		end
+	end
+
+	def show
+		# @shop = Shop.find(id: shop.id)
+		@shop = Shop.find(params[:id])
 	end
 
 	def edit
@@ -35,11 +38,14 @@ def index
 			:shop_name,
 			:feature,
 			:postal_code,
-			:address,
+			:prefecture_code,
+			:address_city,
+			:address_building,
 			:phone_number,
 			:point,
-			:img
+			:img_id
 			)
 	end
+
 end
 

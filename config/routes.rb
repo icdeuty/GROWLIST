@@ -12,18 +12,29 @@ Rails.application.routes.draw do
   get 'homes/about'
   namespace :admins do
   	resources :users
+    resources :blogs
+    resources :shops
+    resources :tweets
   end
 
   namespace :users do
   	get 'users/top'
 
     resources :users
-    resources :shops
-    resources :blogs
+    resources :shops do
+      resources :shop_comments, only: [:index, :create, :destroy, :show, :edit, :update]
+      resource :shop_favs, only: [:create, :destroy]
+    end
+    resources :blogs do
+      resources :blog_comments, only: [:index, :create, :destroy, :show, :edit, :update]
+      resource :blog_favs, only: [:create, :destroy]
+      get "search" => "blogs#search"
+    end
     resources :relationships, only: [:create, :destroy, :index]
     get "show_tweets" => "tweets#show_tweets"
     resources :tweets do
-      resources :comments, only: [:create, :destroy]
+      resources :comments, only: [:index, :create, :show, :edit, :update, :destroy]
+      resource :tweet_favs, only: [:create, :destroy]
     end
   end
 

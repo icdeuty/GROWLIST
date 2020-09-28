@@ -25,11 +25,16 @@
 	</p>
 	<p>
 		<%= form.label :郵便番号 %><br>
-		<%= form.text_field :postal_code %>
+		<%= form.text_field :postal_code, autofocus: true, placeholder: 'ハイフンなしで入力',class: "postal_code",id: "address_zipcode" %>
 	</p>
 	<p>
-		<%= form.label :住所 %><br>
-		<%= form.text_field :address %>
+		<%= form.label :都道府県 %><br>
+		<%= form.collection_select :prefecture_code, JpPrefecture::Prefecture.all, :name, :name, class: "address" %><br>
+	</p>
+	<p>
+		<%= form.label :都道府県以下の住所 %><br>
+		<%= form.text_field :address_city,autofocus: true, placeholder: '市区町村・地域',class: "address",id: "address_city" %><br/>
+		<%= form.text_area :address_building, autofocus: true, placeholder: 'それ以下の住所', class: "address",id:"address_street" %>
 	</p>
 	<p>
 		<%= form.label :電話番号 %><br>
@@ -38,6 +43,11 @@
 	<p>
 		<%= form.label :おすすめポイント %><br>
 		<%= form.text_field :point %>
+	</p>
+
+	<p>
+		<%#= form.label :画像 %><br/>
+		<%#= form.attachment_field :img_id %>
 	</p>
 
 
