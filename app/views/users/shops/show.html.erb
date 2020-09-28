@@ -2,6 +2,14 @@
 	<div class="row">
 		<div class="col-md-4">
 			<%= image_tag '地図用.jpg',:size => '300x300' %>
+			<% if user_signed_in? && current_user.id == @shop.user.id %>
+		      	<div class="name2">
+		       		<%= link_to '編集', edit_users_shop_path(@shop), method: :get %>
+		      	</div>
+	      		<div class="name2">
+	       			<%= link_to '削除', users_shop_path(@shop.id), method: :delete, data: { confirm: "削除しますか？" } %>
+	      		</div>
+		    <% end %>
 		</div>
 
 		<div class="col-md-8">

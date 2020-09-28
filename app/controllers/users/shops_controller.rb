@@ -24,12 +24,20 @@ def index
 	end
 
 	def edit
+		@shop = Shop.find(params[:id])
 	end
 
+
 	def update
+	  	shop = Shop.find(params[:id])
+	  	shop.update(shop_params)
+	  	redirect_to users_shop_path(shop_params)
 	end
 
 	def destroy
+		shop = Shop.find(params[:id])
+		shop.destroy if shop.user_id == current_user.id
+		redirect_to users_shops_path
 	end
 
 	private

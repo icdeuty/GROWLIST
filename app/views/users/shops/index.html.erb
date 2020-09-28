@@ -1,9 +1,10 @@
 <link rel="stylesheet" href="shops.scss">
 
-<%= link_to '新規投稿', new_users_shop_path(current_user), class: 'btn btn-primary'%>
-
 <h1>花屋を探す<span class="glyphicon glyphicon-home" aria-hidden="true"></span>
 </h1>
+<div class="text-center">
+<%= link_to '新規投稿', new_users_shop_path(current_user), class: 'btn btn-primary'%>
+</div>
 
 <div class="container">
 	<div class="row">
@@ -16,7 +17,15 @@
 				<% else %>
 					<%= image_tag attachment_url(shop, :img, :fill, 500, 500, format: "jpg") %>
 				<% end %>
-				<h5><%= link_to shop.shop_name, users_shop_path(shop) %></h5>
+				<h3><%= link_to shop.shop_name, users_shop_path(shop) %></h3>
+				<% if user_signed_in? && current_user.id == shop.user.id %>
+			      	<h5>
+			       		<%= link_to '編集', edit_users_shop_path(shop), method: :get %>
+			      	</h5>
+		      		<h5>
+		       			<%= link_to '削除', users_shop_path(shop.id), method: :delete, data: { confirm: "削除しますか？" } %>
+		      		</h5>
+		    	<% end %>
 				<!-- <h5><%#= shop.created_at.strftime("%Y-%m-%d") %></h5> -->
 				<!-- <h5><%#= link_to blog.user.name, users_user_path(blog.user), method: :get %>さん</h5> -->
 			</div>
