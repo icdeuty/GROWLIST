@@ -65,7 +65,7 @@ gem 'devise'
 
 gem 'dotenv-rails'
 group :production do
-  gem 'mysql2'
+  gem 'mysql2','~> 0.4.4'
 end
 
 gem 'bootstrap-sass', '~> 3.3.6'
