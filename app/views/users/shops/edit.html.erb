@@ -1,0 +1,60 @@
+<h1>花屋の編集</h1>
+
+<%#= form_for([:blogs, @blog]) do |f| %>
+<%= form_for @shop, url: users_shop_path(@shop),method: :patch do |f| %>
+
+	<div class="form-group has-icon">
+		<label class="control-label sr-only" for="inputEmail">店名</label>
+		<%= f.text_field :shop_name, autofocus: true, class: "form-control", id: "inputEmail", placeholder: "店名" %>
+	</div>
+
+	<div class="form-group has-icon">
+		<label class="control-label sr-only" for="inputEmail">一言で表すと・・・</label>
+		<%= f.text_field :feature, autofocus: true, class: "form-control", id: "inputEmail", placeholder: "一言で表すと・・・" %>
+	</div>
+
+	<div class="form-group has-icon">
+		<label class="control-label sr-only" for="inputEmail">郵便番号</label>
+		<%= f.text_field :postal_code, autofocus: true, class: "form-control", id: "inputEmail", placeholder: "郵便番号" %>
+	</div>
+
+	<div class="form-group has-icon">
+		<label class="control-label sr-only" for="inputEmail">都道府県</label>
+		<%= f.text_field :prefecture_code, autofocus: true, class: "form-control", id: "inputEmail", placeholder: "都道府県" %>
+	</div>
+	
+	<div class="form-group has-icon">
+		<label class="control-label sr-only" for="inputEmail">市区町村</label>
+		<%= f.text_field :address_city, autofocus: true, class: "form-control", id: "inputEmail", placeholder: "市区町村" %>
+	</div>
+
+	<div class="form-group has-icon">
+		<label class="control-label sr-only" for="inputEmail">それ以下の住所</label>
+		<%= f.text_field :address_building, autofocus: true, class: "form-control", id: "inputEmail", placeholder: "それ以下の住所" %>
+	</div>
+
+	<div class="form-group has-icon">
+		<label class="control-label sr-only" for="inputEmail">電話番号</label>
+		<%= f.text_field :phone_number, autofocus: true, class: "form-control", id: "inputEmail", placeholder: "電話番号" %>
+	</div>
+
+	<div class="form-group has-icon">
+		<label class="control-label sr-only" for="inputEmail">おすすめする理由</label>
+		<%= f.text_field :point, autofocus: true, class: "form-control", id: "inputEmail", placeholder: "おすすめする理由" %>
+	</div>
+
+	<div class="form-group has-icon">
+		<div class="user-edit-image">
+			<%#= image_tag attachment_url(@shop, :img, :fill, 400, 400, format: "jpg") %>
+			<%#= attachment_image_tag @user, :img, :fill, 60, 60, class: "img-circle pull-left profile-thumb", fallback: "no_image.jpg" %>
+		</div>
+		<!-- <label class="control-label sr-only" for="imputEmail">Image</label> -->
+		<%#= f.attachment_field :img, placeholder: "プロフィール画像", class: "user-edit-form" %>
+	</div>
+			
+		</div>
+
+	</div>
+
+	<%= f.submit "店舗内容を変更する", class:"btn btn-lg btn-block btn-base-1 mt-20" %>
+<% end %>

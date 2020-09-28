@@ -49,26 +49,26 @@
 				      <%= tweet.comments.count %>/
 
 				      <% if tweet.favorited_by?(current_user) %>
-			    		<%= link_to users_tweet_tweet_favs_path(tweet), method: :delete do %>
-			    			<i class="fa fa-heart" aria-hidden="true" style="color: red;">いいね！</i>
-			    		<% end %>
-			    		<%= tweet.tweet_favs.count %>
+				    		<%= link_to users_tweet_tweet_favs_path(tweet), method: :delete do %>
+				    			<i class="fa fa-heart" aria-hidden="true" style="color: red;">いいね！</i>
+				    		<% end %>
+				    		<%= tweet.tweet_favs.count %>
 			    	  <% else %>
-			    		<%= link_to users_tweet_tweet_favs_path(tweet), method: :post do %>
-			    			<i class="fa fa-heart" aria-hidden="true">いいね！</i>
+				    		<%= link_to users_tweet_tweet_favs_path(tweet), method: :post do %>
+				    			<i class="fa fa-heart" aria-hidden="true">いいね！</i>
+				    	  <% end %>
+				    	  <%= tweet.tweet_favs.count %>
 			    	  <% end %>
-			    	  <%= tweet.tweet_favs.count %>
-			    <% end %>
 
 				      <% if user_signed_in? && current_user.id == tweet.user_id %>
-				      <div class="name2">
-				       <%= link_to '編集', edit_users_tweet_path(tweet), method: :get %>
-				      </div>
-				      <div class="name2">
-				       <%= link_to '削除', users_tweet_path(tweet.id), method: :delete %>
-				      </div>
+					      <div class="name2">
+					      	 <%= link_to '編集', edit_users_tweet_path(tweet), method: :get %>
+					      </div>
+					      <div class="name2">
+					      	 <%= link_to '削除', users_tweet_path(tweet.id), method: :delete %>
+					      </div>
 			    	　　<% end %>
-				<% end %>
+			    	<% end %>
 			<% else %>
 				<h4>＊まだタネはまいていません＊</h4>
 			<% end %>
