@@ -3,6 +3,7 @@ class Shop < ApplicationRecord
 		validates :shop_name
 		validates :feature
 		validates :postal_code
+		validates :jp_prefecture
 		validates :address_city
 		validates :address_building
 		validates :phone_number

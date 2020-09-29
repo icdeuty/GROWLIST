@@ -7,7 +7,7 @@
 		       		<%= link_to '編集', edit_users_shop_path(@shop), method: :get %>
 		      	</div>
 	      		<div class="name2">
-	       			<%= link_to '削除', users_shop_path(@shop.id), method: :delete, data: { confirm: "削除しますか？" } %>
+	       			<%= link_to '削除', users_shop_path(@shop), method: :delete, data: { confirm: "削除しますか？" } %>
 	      		</div>
 		    <% end %>
 		</div>

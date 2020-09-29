@@ -1,5 +1,5 @@
 class Users::UsersController < ApplicationController
-  before_action :authenticate_user!
+  before_action :authenticate_user!, except: [:admins]
   before_action :ensure_user, only: [:edit, :update, :destroy]
   #before_action :configure_permitted_parameters, id: :devise_controller?
   def top
