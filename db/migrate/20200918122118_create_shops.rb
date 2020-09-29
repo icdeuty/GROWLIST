@@ -8,6 +8,7 @@ class CreateShops < ActiveRecord::Migration[5.2]
       t.integer :phone_number
       t.text :point
       t.string :img_id
+      t.integer :user_id
 
       t.timestamps
     end

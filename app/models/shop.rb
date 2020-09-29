@@ -1,9 +1,13 @@
 class Shop < ApplicationRecord
+
+	include JpPrefecture
+	jp_prefecture :prefecture_code
+	
 	with_options presence:true do
 		validates :shop_name
 		validates :feature
 		validates :postal_code
-		validates :jp_prefecture
+		validates :prefecture_code
 		validates :address_city
 		validates :address_building
 		validates :phone_number
@@ -13,8 +17,7 @@ class Shop < ApplicationRecord
 	belongs_to :user
 	# attachment :img
 
-	include JpPrefecture
-	jp_prefecture :prefecture_code
+
 
 	def prefecture_name
 		JpPrefecture::Prefecture.find(code: prefecture_code).try(:name)

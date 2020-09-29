@@ -9,13 +9,18 @@ def index
 	end
 
 	def create
-		@shop = Shop.new(shop_params)
-		@shop.user_id = current_user.id
-		if @shop.save
+		# @shop = Shop.new(shop_params)
+		if @shop = current_user.shops.create(shop_params)
 			redirect_to users_shops_path(current_user)
 		else
 			render 'new'
 		end
+		# @shop.user_id = current_user.id
+		# if @shop.save
+		# 	redirect_to users_shops_path(current_user)
+		# else
+		# 	render 'new'
+		# end
 	end
 
 	def show

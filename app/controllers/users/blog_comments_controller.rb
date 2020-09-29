@@ -7,7 +7,7 @@ class Users::BlogCommentsController < ApplicationController
 	end
 
 	def create
-		@blogcomment = BlogComment.create(text: params[:blog_comment][:text],blog_id: params[:blog_id], user_id: current_user.id)
+		@blog_comment = BlogComment.create(text: params[:blog_comment][:text],blog_id: params[:blog_id], user_id: current_user.id)
 		redirect_to request.referer
 	end
 
