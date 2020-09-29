@@ -40,6 +40,7 @@ def index
 		redirect_to users_shops_path
 	end
 
+
 	private
 	def shop_params
 		params.require(:shop).permit(

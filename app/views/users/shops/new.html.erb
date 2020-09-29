@@ -29,7 +29,7 @@
 	</p>
 	<p>
 		<%= form.label :都道府県 %><br>
-		<%= form.collection_select :prefecture_code, JpPrefecture::Prefecture.all, :name, :name, class: "address" %><br>
+		<%= form.collection_select :prefecture_code, JpPrefecture::Prefecture.all, :code, :name%><br>
 	</p>
 	<p>
 		<%= form.label :都道府県以下の住所 %><br>
@@ -42,7 +42,7 @@
 	</p>
 	<p>
 		<%= form.label :おすすめポイント %><br>
-		<%= form.text_field :point %>
+		<%= form.telephone_field :point %>
 	</p>
 
 	<p>
