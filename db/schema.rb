@@ -89,12 +89,12 @@ ActiveRecord::Schema.define(version: 2020_09_26_073413) do
     t.integer "phone_number"
     t.text "point"
     t.string "img_id"
+    t.integer "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "prefecture_code"
     t.string "address_city"
     t.string "address_building"
-    t.string "user_id"
   end
 
   create_table "tweet_comments", force: :cascade do |t|

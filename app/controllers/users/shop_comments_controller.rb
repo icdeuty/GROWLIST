@@ -4,7 +4,7 @@ class Users::ShopCommentsController < ApplicationController
 	def index
 		@tweet = Tweet.find(params[:tweet_id])
 		@comment = Comment.new
-		@comments = Comment.where(tweet_id: @tweet)
+		@comments = Comment.where(tweet_id: @tweet
 	end
 
 	def create

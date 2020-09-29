@@ -22,7 +22,7 @@
 					<%= image_tag attachment_url(user, :profile_img, :fill, 50, 50, format: "jpg") %>
 				<% end %>
 			</td>
-			<td><%= link_to user.name, users_user_path(user), method: :get %>さん</td>
+			<td><%= link_to user.name, admins_user_path(user), method: :get %>さん</td>
 			<td><%= user.profile  %></td>
 			<td><%= user.created_at.strftime("%Y-%m-%d") %></td>
 		</tbody>
